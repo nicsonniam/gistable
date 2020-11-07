@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "gistable"
+    }
+  },
+  "defaultProject": "gistable",
+  "cli": {
+    "analytics": false
+  }
 }

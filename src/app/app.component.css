@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+h1{
+    font-family: 'Roboto','sans-serif';
+    font-weight: 100;
+    font-size: 50px;
+}
+.titlediv{
+    padding-left: 30px;
+    text-align: center;
+}
+.gist-card {
+  max-width: 500px;
+}
+.tablediv{
+    text-align: center;
+    width: 400px;
+    margin: auto;
+}
+.example-header-image {
+  background-size: cover;
+}
