@@ -4,21 +4,31 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogUserprofileComponent } from './dialog-userprofile/dialog-userprofile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogUserprofileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
+    HttpClientModule, 
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatTabsModule
   ], 
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogUserprofileComponent]
 })
 export class AppModule { }

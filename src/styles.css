@@ -1,3 +1,9 @@
+::-webkit-scrollbar{
+    display: none;
+}
 body{
     background-color: #F2F4F3;
+}
+.dialog-userbg {
+    background-image: url("/assets/img/userprofilebg.png");
 }

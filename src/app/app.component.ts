@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Data } from '@angular/router';
+import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { DialogUserprofileComponent } from './dialog-userprofile/dialog-userprofile.component';
 import { PostsService } from './posts.service';
 
 @Component({
@@ -10,33 +11,73 @@ import { PostsService } from './posts.service';
 })
 export class AppComponent implements OnInit {
   subscriptions: Subscription[] = [];
-  data=[];
+  gists=[];
+  //files=[];
   apiResult=[];
-  apiResultUrl:any;
+  apiResultUrl=[];
+  //filesList=[];
 
-  constructor(private postData:PostsService)
+  constructor(
+    public postData:PostsService,
+    public dialog:MatDialog
+    )
   {
     this.getApiResponse();
-    
-  }
+
+  } 
   title = 'gistable';
   ngOnInit(){
   }
   getApiResponse() {
     this.postData.getPosts().subscribe((result)=>{
-      this.apiResult=Object.assign([], result);
-      for(var i=1;i<this.apiResult.length;i++){
+      this.apiResult=Object.assign([], result);      
+      for(var i=0;i<this.apiResult.length;i++){
+        var filesList = [];
+        var files = [];
+        files=this.apiResult[i].files;
+        for(let o in files){
+          var file = {
+            filename : o
+          }
+          filesList.push(file);
+        }
+        if(filesList.length>=4){
+          var shortFilesList = filesList.slice(0,3);
+          var file1 = {
+            filename : "..."
+          }
+          shortFilesList.push(file1);
+        }else{
+          shortFilesList = filesList;
+        }
+
         var object = {
+          id: this.apiResult[i].id,
+          userUrl: this.apiResult[i].owner.url,
+          noOffiles : filesList.length,
+          files : shortFilesList,
           description : this.apiResult[i].description, 
           avatarurl : this.apiResult[i].owner.avatar_url
         }
-        this.data.push(object);
+        this.gists.push(object);
+        
       }
     })
   }
   getApiResponseUrl(url:string) {
     this.postData.getPostUrl(url).subscribe((result)=>{
-      this.apiResultUrl=result;
-    })
+      this.apiResultUrl=Object.assign([], result);      
+    });
+  }
+  openUserDialog(url:string){
+    this.postData.getPostUrl(url).subscribe((result)=>{
+      var userDetails=Object.assign([], result);  
+      const dialogConfig = new MatDialogConfig;
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = userDetails;
+      dialogConfig.width = '600px';
+      dialogConfig.height = '600px';
+      this.dialog.open(DialogUserprofileComponent, dialogConfig);    
+    });
   }
 }

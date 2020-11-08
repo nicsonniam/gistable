@@ -1,0 +1,44 @@
+<div class="userprofilediv">
+    <mat-card class="user-card">
+        <p (click)="closeDialog()" class="close">X</p>
+        <div style="text-align: center;">
+            <img mat-card-avatar (click)="goToLink(htmlurl)" src="{{avatarurl}}" class="header-image">
+        </div>
+        <div style="text-align: center;">
+            <h1 (click)="goToLink(htmlurl)" class="usercard-title">{{username}}</h1>
+            <h6 style="text-align: center;font-size: 15px;">{{name}}<span *ngIf="company">&nbsp;&nbsp;|&nbsp;&nbsp;{{company}}</span></h6>
+            <!-- <h6 style="text-align: center;font-size: 15px;">Works at: {{company}}</h6> -->
+            <h6 *ngIf="location" style="text-align: center;font-size: 15px;"><img style ="height:18px;width: auto;vertical-align: middle;" *ngIf="location" src="/../../assets/img/location.png">&nbsp;&nbsp;{{location}}</h6>
+            <h6 (click)="goToTwitter(twitter)" *ngIf="twitter" style="text-align: center;font-size: 15px;cursor:pointer;"><img style ="height:18px;width: auto;vertical-align: middle;" *ngIf="twitter" src="/../../assets/img/twitter.png">&nbsp;&nbsp;@{{twitter}}</h6>
+            <br>
+            <h6 style="text-align: center;font-size: 15px;color:#6491A6">{{followers}} Followers &nbsp;&nbsp;|&nbsp;&nbsp; {{following}} Following</h6>
+            <br>
+        </div>
+    <!-- <mat-card-content>
+    <div class="filelist"> 
+    
+    </div>
+    </mat-card-content>
+    <mat-card-actions style="text-align: center;">
+
+    </mat-card-actions> -->
+</mat-card>
+<div class="biodiv" *ngIf="bio">
+    <p class="biotitle">Bio:</p>
+    <p class="bio">{{bio}}</p>
+</div>
+<br>
+<br>
+<div>
+    <ng-container *ngIf="(asyncTabs | async) === null">
+        Loading tabs...
+    </ng-container>
+            
+    <mat-tab-group mat-stretch-tabs mat-align-tabs="center">
+        <mat-tab *ngFor="let tab of asyncTabs | async">
+            <ng-template mat-tab-label>{{tab.label}}</ng-template>
+            {{tab.content}}
+        </mat-tab>
+    </mat-tab-group>
+</div>
+</div>

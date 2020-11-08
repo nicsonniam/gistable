@@ -7,17 +7,36 @@ h1{
     font-size: 50px;
 }
 .titlediv{
-    padding-left: 30px;
     text-align: center;
+    padding-left: 40px;
 }
 .gist-card {
-  max-width: 500px;
+    max-width: 370px; 
+    overflow:hidden;
 }
 .tablediv{
     text-align: center;
-    width: 400px;
+    width: 370px;
     margin: auto;
 }
 .example-header-image {
   background-size: cover;
+  cursor: pointer;
+}
+.filelist{
+    overflow: auto;
+    width: 450px;
+} 
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+}
+.filebox{
+    border:0.5px solid #DBD6D2;
+    border-radius: 6px;
+    width:370px;
+}
+.carddiv{
+    overflow-wrap: normal;
 }
