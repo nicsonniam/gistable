@@ -8,8 +8,8 @@
             <h1 (click)="goToLink(htmlurl)" class="usercard-title">{{username}}</h1>
             <h6 style="text-align: center;font-size: 15px;">{{name}}<span *ngIf="company">&nbsp;&nbsp;|&nbsp;&nbsp;{{company}}</span></h6>
             <!-- <h6 style="text-align: center;font-size: 15px;">Works at: {{company}}</h6> -->
-            <h6 *ngIf="location" style="text-align: center;font-size: 15px;"><img style ="height:18px;width: auto;vertical-align: middle;" *ngIf="location" src="/../../assets/img/location.png">&nbsp;&nbsp;{{location}}</h6>
-            <h6 (click)="goToTwitter(twitter)" *ngIf="twitter" style="text-align: center;font-size: 15px;cursor:pointer;"><img style ="height:18px;width: auto;vertical-align: middle;" *ngIf="twitter" src="/../../assets/img/twitter.png">&nbsp;&nbsp;@{{twitter}}</h6>
+            <h6 *ngIf="location" style="text-align: center;font-size: 15px;"><img style ="height:18px;width: auto;vertical-align: middle;" *ngIf="location" src="./assets/img/location.png">&nbsp;&nbsp;{{location}}</h6>
+            <h6 (click)="goToTwitter(twitter)" *ngIf="twitter" style="text-align: center;font-size: 15px;cursor:pointer;"><img style ="height:18px;width: auto;vertical-align: middle;" *ngIf="twitter" src="./assets/img/twitter.png">&nbsp;&nbsp;@{{twitter}}</h6>
             <br>
             <h6 style="text-align: center;font-size: 15px;color:#6491A6">{{followers}} Followers &nbsp;&nbsp;|&nbsp;&nbsp; {{following}} Following</h6>
             <br>
