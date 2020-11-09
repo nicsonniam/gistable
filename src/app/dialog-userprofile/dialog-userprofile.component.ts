@@ -6,7 +6,7 @@ import { Observable,Observer } from 'rxjs';
 
 export interface ExampleTab {
   label: string;
-  content: string;
+  content: any[];
 }
 
 @Component({
@@ -32,6 +32,10 @@ export class DialogUserprofileComponent implements OnInit {
   followers: string;
   following: string;
   gistsurl: string;
+  followingurl: string;
+  followersurl: string;
+  subscriptionurl: string;
+  starredurl: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -40,9 +44,18 @@ export class DialogUserprofileComponent implements OnInit {
     this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
       setTimeout(() => {
         observer.next([ 
-          {label: 'First', content: 'Content 1'},
-          {label: 'Second', content: 'Content 2'},
-          {label: 'Third', content: 'Content 3'},
+          {
+            label: 'Gists', 
+            content: []
+          },
+          {
+            label: 'Subscriptions',
+            content: []
+          },
+          {
+            label: 'Starred', 
+            content: []
+          },
         ]);
       }, 1000);
     });
@@ -60,6 +73,10 @@ export class DialogUserprofileComponent implements OnInit {
     this.followers = this.data.followers;
     this.following = this.data.following;
     this.gistsurl = 'https://api.github.com/users/'.concat(this.username,'/gists');
+    this.followingurl = 'https://api.github.com/users/'.concat(this.username,'/following');
+    this.followersurl = 'https://api.github.com/users/'.concat(this.username,'/followers');
+    this.subscriptionurl = this.data.subscriptions_url;
+    this.starredurl = 'https://api.github.com/users/'.concat(this.username,'/starred');
   }
 
   ngOnInit(): void {

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { DialogGistComponent } from './dialog-gist/dialog-gist.component';
 import { DialogUserprofileComponent } from './dialog-userprofile/dialog-userprofile.component';
 import { PostsService } from './posts.service';
 
@@ -10,7 +11,7 @@ import { PostsService } from './posts.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  subscriptions: Subscription[] = [];
+  //subscriptions: Subscription[] = [];
   gists=[];
   //files=[];
   apiResult=[];
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit {
   }
   getApiResponse() {
     this.postData.getPosts().subscribe((result)=>{
-      this.apiResult=Object.assign([], result);      
+      this.apiResult=Object.assign([], result);
+      console.log(this.apiResult);      
       for(var i=0;i<this.apiResult.length;i++){
         var filesList = [];
         var files = [];
@@ -54,6 +56,7 @@ export class AppComponent implements OnInit {
         var object = {
           id: this.apiResult[i].id,
           userUrl: this.apiResult[i].owner.url,
+          url: this.apiResult[i].url,
           noOffiles : filesList.length,
           files : shortFilesList,
           description : this.apiResult[i].description, 
@@ -64,11 +67,11 @@ export class AppComponent implements OnInit {
       }
     })
   }
-  getApiResponseUrl(url:string) {
+/*   getApiResponseUrl(url:string) {
     this.postData.getPostUrl(url).subscribe((result)=>{
       this.apiResultUrl=Object.assign([], result);      
     });
-  }
+  } */
   openUserDialog(url:string){
     this.postData.getPostUrl(url).subscribe((result)=>{
       var userDetails=Object.assign([], result);  
@@ -79,5 +82,18 @@ export class AppComponent implements OnInit {
       dialogConfig.height = '600px';
       this.dialog.open(DialogUserprofileComponent, dialogConfig);    
     });
+  }
+  openGistDialog(url:string){
+    for(var i=0; i<this.apiResult.length; i++){
+      if(this.apiResult[i].url == url){
+        var thisGist = this.apiResult[i]
+      }
+    }
+    const dialogConfig = new MatDialogConfig;
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = thisGist;
+      dialogConfig.width = '600px';
+      dialogConfig.height = '600px';
+      this.dialog.open(DialogGistComponent, dialogConfig);  
   }
 }

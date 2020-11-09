@@ -10,12 +10,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogUserprofileComponent } from './dialog-userprofile/dialog-userprofile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { MatTabsModule } from '@angular/material/tabs';
+import { DialogGistComponent } from './dialog-gist/dialog-gist.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DialogUserprofileComponent
+    DialogUserprofileComponent,
+    DialogGistComponent
   ],
   imports: [
     BrowserModule,
