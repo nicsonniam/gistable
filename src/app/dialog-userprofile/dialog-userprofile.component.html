@@ -27,17 +27,36 @@
     <p class="biotitle">Bio:</p>
     <p class="bio">{{bio}}</p>
 </div>
-<br>
-<div>
-    <ng-container *ngIf="(asyncTabs | async) === null">
-        <span style="font-family: 'Roboto','sans-serif';">Loading tabs...</span>
-    </ng-container>
-            
-    <mat-tab-group mat-stretch-tabs mat-align-tabs="center">
-        <mat-tab *ngFor="let tab of asyncTabs | async">
-            <ng-template mat-tab-label>{{tab.label}}</ng-template>
-            {{tab.content}}
-        </mat-tab>
-    </mat-tab-group>
-</div>
+    <br>
+    <div style="height: 400px;">
+        <mat-tab-group mat-stretch-tabs mat-align-tabs="center">
+            <mat-tab label="User's Gists">
+            <hr>
+            <p>{{noGists}}</p>
+            <div *ngFor="let gist of gists">
+                <a *ngIf="gist.description!=''" (click)="openGistDialog(gist.url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">{{gist.description}}</a>
+                <a *ngIf="gist.description==''" (click)="openGistDialog(gist.url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">No title</a>
+                <hr>
+            </div>
+            </mat-tab>
+            <mat-tab label="Subscriptions">
+            <hr>
+            <p>{{noSubs}}</p>
+            <div *ngFor="let subscription of subscriptions">
+                <a *ngIf="subscription.description!=null" (click)="goToLink(subscription.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">{{subscription.description}}</a>
+                <a *ngIf="subscription.description==null" (click)="goToLink(subscription.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">No title</a>
+                <hr>
+            </div>
+            </mat-tab>
+            <mat-tab label="Starred">
+            <hr>
+            <p>{{noStar}}</p>
+            <div *ngFor="let starred of starred">
+                <a *ngIf="starred.description!=null" (click)="goToLink(starred.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">{{starred.description}}</a>
+                <a *ngIf="starred.description==null" (click)="goToLink(starred.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">No title</a>
+                <hr>
+            </div>    
+            </mat-tab>
+          </mat-tab-group>
+    </div>
 </div>

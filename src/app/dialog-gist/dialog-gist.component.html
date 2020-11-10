@@ -1,15 +1,15 @@
 <mat-card class="gist-card">
+  <p (click)="closeDialog()" class="close">X</p>
     <mat-card-header style="text-align: left;">
       <img mat-card-avatar src="{{data.owner.avatar_url}}" class="example-header-image">
-      <mat-card-title style="overflow-wrap: normal;" *ngIf="!description">{{description}}</mat-card-title>
-      <mat-card-title *ngIf="description">*No Title</mat-card-title>
+      <mat-card-title style="overflow-wrap: normal;">{{description}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="filelist">
         <p style="text-align: left;font-size: 18px;">Files:</p>
         <div class="filebox">
           <ul *ngFor="let file of filesList let j=index;" style="text-align: left;">
-            <li><a (click)="goToLink(file.url)"></a>{{file.filename}}</li>
+            <li><a (click)="goToLink(file.url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">{{file.filename}}</a></li>
           </ul>
         </div>
       </div>
@@ -20,3 +20,24 @@
       <button mat-button>VIEW</button>
     </mat-card-actions> -->
   </mat-card>
+  <br>
+<div>          
+      <mat-tab-group mat-stretch-tabs mat-align-tabs="center">
+        <mat-tab label="Comments">
+        <hr>
+        <p>{{noComments}}</p>
+        <div *ngFor="let comment of comments">
+        {{comment.user.login}}: {{comment.body}}
+        <hr>
+        </div>
+        </mat-tab>
+        <mat-tab label="History">
+        <hr>
+        <div *ngFor="let history of history">
+        Version: {{history.version}}
+        {{history.user.login}} committed at {{history.committed_at}}
+        <hr>
+        </div>    
+        </mat-tab>
+      </mat-tab-group>
+</div>

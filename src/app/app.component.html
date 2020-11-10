@@ -1,6 +1,8 @@
 <div class="titlediv">
   <h1>Gistable</h1>
+  <a (click)="openSavedGistsDialog()" class="savedG">Saved gists</a>
 </div>
+<br>
 <div class="tablediv">
   <table>
     <tr *ngFor="let gist of gists; let i=index;">
@@ -13,7 +15,7 @@
             </mat-card-header>
             <mat-card-content>
               <div class="filelist">
-                <p style="text-align: left;font-size: 18px;">Files:</p>
+                <p style="text-align: left;font-size: 15px;">Uploaded by: <a style="cursor: pointer; text-decoration: underline;color: #6491A6;" (click)="openUserDialog(gist.userUrl)">{{gist.login}}</a></p>
                 <div class="filebox">
                   <ul *ngFor="let file of gist.files let j=index;" style="text-align: left;">
                     <li>{{file.filename}}</li>
@@ -23,7 +25,7 @@
             </mat-card-content>
             <hr>
             <mat-card-actions>
-              <button mat-button>LIKE</button>
+              <button mat-button (click)="saveGist(gist.url)">SAVE</button>
               <button mat-button (click)="openGistDialog(gist.url)">VIEW</button>
             </mat-card-actions>
           </mat-card>

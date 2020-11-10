@@ -1,8 +1,10 @@
 import { ThrowStmt } from '@angular/compiler';
+import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { DialogGistComponent } from './dialog-gist/dialog-gist.component';
+import { DialogSavedComponent } from './dialog-saved/dialog-saved.component';
 import { DialogUserprofileComponent } from './dialog-userprofile/dialog-userprofile.component';
 import { PostsService } from './posts.service';
 
@@ -15,6 +17,7 @@ export class AppComponent implements OnInit {
   gists=[];
   apiResult=[];
   apiResultUrl=[];
+  likedGists=[];
 
   constructor(
     public postData:PostsService,
@@ -22,10 +25,32 @@ export class AppComponent implements OnInit {
     )
   {
     this.getApiResponse();
+    
 
   } 
   title = 'gistable';
   ngOnInit(){
+  }
+  saveGist(url:string){
+    var existFlag=false;
+    this.likedGists = JSON.parse(localStorage.getItem("likedGists"));
+    if(this.likedGists==null){
+      this.likedGists=[];
+    }
+    for(var i=0;i<this.apiResult.length;i++){
+      if(this.apiResult[i].url==url){
+        var g = this.apiResult[i];
+      }
+    }
+    for(var j=0;j<this.likedGists.length;j++){
+      if(this.likedGists[j].url==url){
+        existFlag=true;
+      }
+    }
+    if(!existFlag){
+      this.likedGists.push(g);
+    }
+    localStorage.setItem("likedGists", JSON.stringify(this.likedGists));
   }
   getApiResponse() {
     this.postData.getPosts().subscribe((result)=>{
@@ -50,7 +75,7 @@ export class AppComponent implements OnInit {
           shortFilesList = filesList;
         }
         if(this.apiResult[i].description==null||this.apiResult[i].description==''){
-          var desc = "*No Title";
+          var desc = "Gist by: ".concat(this.apiResult[i].owner.login);
         }else{
           desc = this.apiResult[i].description;
         }
@@ -58,6 +83,7 @@ export class AppComponent implements OnInit {
         var object = {
           id: this.apiResult[i].id,
           userUrl: this.apiResult[i].owner.url,
+          login: this.apiResult[i].owner.login,
           url: this.apiResult[i].url,
           noOffiles : filesList.length,
           files : shortFilesList,
@@ -69,16 +95,11 @@ export class AppComponent implements OnInit {
       }
     })
   }
-/*   getApiResponseUrl(url:string) {
-    this.postData.getPostUrl(url).subscribe((result)=>{
-      this.apiResultUrl=Object.assign([], result);      
-    });
-  } */
   openUserDialog(url:string){
     this.postData.getPostUrl(url).subscribe((result)=>{
       var userDetails=Object.assign([], result);  
       const dialogConfig = new MatDialogConfig;
-      dialogConfig.autoFocus = true;
+      dialogConfig.autoFocus = false;
       dialogConfig.data = userDetails;
       dialogConfig.width = '600px';
       dialogConfig.height = '600px';
@@ -86,16 +107,24 @@ export class AppComponent implements OnInit {
     });
   }
   openGistDialog(url:string){
-    for(var i=0; i<this.apiResult.length; i++){
-      if(this.apiResult[i].url == url){
-        var thisGist = this.apiResult[i]
-      }
-    }
-    const dialogConfig = new MatDialogConfig;
-      dialogConfig.autoFocus = true;
+    this.postData.getPostUrl(url).subscribe((result)=>{
+      var thisGist = result;
+      const dialogConfig = new MatDialogConfig;
+      dialogConfig.autoFocus = false;
       dialogConfig.data = thisGist;
-      dialogConfig.width = '450px';
+      dialogConfig.width = '460px';
       dialogConfig.height = '400px';
+      dialogConfig.disableClose = true;
       this.dialog.open(DialogGistComponent, dialogConfig);  
+    });      
+  }
+  openSavedGistsDialog(){
+    this.likedGists = JSON.parse(localStorage.getItem("likedGists"));
+    const dialogConfig = new MatDialogConfig;
+      dialogConfig.autoFocus = false;
+      dialogConfig.data = this.likedGists;
+      dialogConfig.width = '600px';
+      dialogConfig.height = '600px';
+      this.dialog.open(DialogSavedComponent, dialogConfig); 
   }
 }

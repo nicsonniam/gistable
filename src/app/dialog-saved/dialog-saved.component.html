@@ -1,0 +1,35 @@
+<div class="titlediv">
+    <h1>Saved Gists</h1>
+  </div>
+<div class="tablediv">
+    <table>
+      <tr *ngFor="let gist of gists; let i=index;">
+        <td style="padding-bottom: 15px;">
+          <div class="carddiv">
+            <mat-card class="gist-card">
+              <mat-card-header style="text-align: left;">
+                <img (click)="openUserDialog(gist.userUrl)" mat-card-avatar src="{{gist.avatarurl}}" class="example-header-image">
+                <mat-card-title style="overflow-wrap: normal;">{{gist.description}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="filelist">
+                  <p style="text-align: left;font-size: 15px;">Uploaded by: <a style="cursor: pointer; text-decoration: underline;color: #6491A6;" (click)="openUserDialog(gist.userUrl)">{{gist.login}}</a></p>
+                  <div class="filebox">
+                    <ul *ngFor="let file of gist.files let j=index;" style="text-align: left;">
+                      <li>{{file.filename}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </mat-card-content>
+              <hr>
+              <mat-card-actions>
+                <button mat-button (click)="removeGist(gist.url)">UNSAVE</button>
+                <button mat-button (click)="openGistDialog(gist.url)">VIEW</button>
+              </mat-card-actions>
+            </mat-card>
+            <br>
+          </div>
+        </td>
+      </tr>
+    </table>
+</div>

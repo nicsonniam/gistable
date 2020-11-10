@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable,Observer } from 'rxjs';
+import { DialogGistComponent } from '../dialog-gist/dialog-gist.component';
+import { PostsService } from '../posts.service';
 
 export interface ExampleTab {
   label: string;
@@ -36,29 +38,20 @@ export class DialogUserprofileComponent implements OnInit {
   followersurl: string;
   subscriptionurl: string;
   starredurl: string;
+  subscriptions=[];
+  starred=[];
+  gists=[];
+  noGists: string;
+  noSubs: string;
+  noStar: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<DialogUserprofileComponent>) 
+    private dialogRef: MatDialogRef<DialogUserprofileComponent>,
+    public postData:PostsService, 
+    public dialog:MatDialog
+    ) 
   {
-    this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
-      setTimeout(() => {
-        observer.next([ 
-          {
-            label: 'Gists', 
-            content: []
-          },
-          {
-            label: 'Subscriptions',
-            content: []
-          },
-          {
-            label: 'Starred', 
-            content: []
-          },
-        ]);
-      }, 1000);
-    });
     this.username = this.data.login;
     this.avatarurl = this.data.avatar_url;
     this.htmlurl = this.data.html_url;
@@ -77,6 +70,26 @@ export class DialogUserprofileComponent implements OnInit {
     this.followersurl = 'https://api.github.com/users/'.concat(this.username,'/followers');
     this.subscriptionurl = this.data.subscriptions_url;
     this.starredurl = 'https://api.github.com/users/'.concat(this.username,'/starred');
+
+    this.postData.getPostUrl(this.gistsurl).subscribe((result)=>{
+      this.gists=Object.assign([], result);
+      if(this.gists.length==0){
+        this.noGists=this.username.concat(' has no gists');
+      }
+    });
+    this.postData.getPostUrl(this.subscriptionurl).subscribe((result)=>{
+      this.subscriptions=Object.assign([], result);
+      console.log(this.subscriptions);
+      if(this.subscriptions.length==0){
+        this.noSubs=this.username.concat(' has no subscriptions');
+      }
+    });
+    this.postData.getPostUrl(this.starredurl).subscribe((result)=>{
+      this.starred=Object.assign([], result);
+      if(this.starred.length==0){
+        this.noStar=this.username.concat(' has no starred items');
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -96,5 +109,17 @@ export class DialogUserprofileComponent implements OnInit {
   }
   closeDialog() {
     this.dialogRef.close();
+  }
+  openGistDialog(url:string){
+    this.postData.getPostUrl(url).subscribe((result)=>{
+      var thisGist = result;
+      const dialogConfig = new MatDialogConfig;
+      dialogConfig.autoFocus = false;
+      dialogConfig.data = thisGist;
+      dialogConfig.width = '460px';
+      dialogConfig.height = '400px';
+      dialogConfig.disableClose = true;
+      this.dialog.open(DialogGistComponent, dialogConfig);  
+    });      
   }
 }

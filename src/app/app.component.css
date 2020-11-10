@@ -37,3 +37,9 @@ ul{
 .carddiv{
     overflow-wrap: normal;
 }
+.savedG{
+    font-family: 'Roboto','sans-serif';
+    cursor: pointer;
+    text-decoration: underline;
+    color: #6491A6;
+}
