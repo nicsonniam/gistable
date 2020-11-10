@@ -120,11 +120,15 @@ export class AppComponent implements OnInit {
   }
   openSavedGistsDialog(){
     this.likedGists = JSON.parse(localStorage.getItem("likedGists"));
-    const dialogConfig = new MatDialogConfig;
+    if(this.likedGists==null){
+      alert('You have no saved gists!');
+    }else{
+      const dialogConfig = new MatDialogConfig;
       dialogConfig.autoFocus = false;
       dialogConfig.data = this.likedGists;
       dialogConfig.width = '600px';
       dialogConfig.height = '600px';
       this.dialog.open(DialogSavedComponent, dialogConfig); 
+    }
   }
 }
