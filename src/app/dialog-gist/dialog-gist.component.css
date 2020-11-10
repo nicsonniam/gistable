@@ -1,0 +1,39 @@
+h1{
+    font-family: 'Roboto','sans-serif';
+    font-weight: 100;
+    font-size: 50px;
+}
+.titlediv{
+    text-align: center;
+    padding-left: 40px;
+}
+.gist-card {
+    width: 370px; 
+    height:auto;
+}
+.tablediv{
+    text-align: center;
+    width: 373px;
+    margin: auto;
+}
+.example-header-image {
+  background-size: cover;
+  cursor: pointer;
+}
+.filelist{
+    overflow: auto;
+    width: 450px;
+} 
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+}
+.filebox{
+    border:0.5px solid #DBD6D2;
+    border-radius: 6px;
+    width:370px;
+}
+.carddiv{
+    overflow-wrap: normal;
+}

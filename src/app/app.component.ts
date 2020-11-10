@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -11,12 +12,9 @@ import { PostsService } from './posts.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  //subscriptions: Subscription[] = [];
   gists=[];
-  //files=[];
   apiResult=[];
   apiResultUrl=[];
-  //filesList=[];
 
   constructor(
     public postData:PostsService,
@@ -31,8 +29,7 @@ export class AppComponent implements OnInit {
   }
   getApiResponse() {
     this.postData.getPosts().subscribe((result)=>{
-      this.apiResult=Object.assign([], result);
-      console.log(this.apiResult);      
+      this.apiResult=Object.assign([], result);  
       for(var i=0;i<this.apiResult.length;i++){
         var filesList = [];
         var files = [];
@@ -52,6 +49,11 @@ export class AppComponent implements OnInit {
         }else{
           shortFilesList = filesList;
         }
+        if(this.apiResult[i].description==null||this.apiResult[i].description==''){
+          var desc = "*No Title";
+        }else{
+          desc = this.apiResult[i].description;
+        }
 
         var object = {
           id: this.apiResult[i].id,
@@ -59,7 +61,7 @@ export class AppComponent implements OnInit {
           url: this.apiResult[i].url,
           noOffiles : filesList.length,
           files : shortFilesList,
-          description : this.apiResult[i].description, 
+          description : desc, 
           avatarurl : this.apiResult[i].owner.avatar_url
         }
         this.gists.push(object);
@@ -92,8 +94,8 @@ export class AppComponent implements OnInit {
     const dialogConfig = new MatDialogConfig;
       dialogConfig.autoFocus = true;
       dialogConfig.data = thisGist;
-      dialogConfig.width = '600px';
-      dialogConfig.height = '600px';
+      dialogConfig.width = '450px';
+      dialogConfig.height = '400px';
       this.dialog.open(DialogGistComponent, dialogConfig);  
   }
 }
