@@ -18,6 +18,7 @@ h1{
 }
 .example-header-image {
   background-size: cover;
+  cursor: pointer;
 }
 .filelist{
     overflow: auto;

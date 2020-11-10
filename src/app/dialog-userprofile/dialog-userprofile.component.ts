@@ -79,7 +79,6 @@ export class DialogUserprofileComponent implements OnInit {
     });
     this.postData.getPostUrl(this.subscriptionurl).subscribe((result)=>{
       this.subscriptions=Object.assign([], result);
-      console.log(this.subscriptions);
       if(this.subscriptions.length==0){
         this.noSubs=this.username.concat(' has no subscriptions');
       }
