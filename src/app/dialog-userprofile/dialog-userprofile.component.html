@@ -35,7 +35,7 @@
             <p>{{noGists}}</p>
             <div *ngFor="let gist of gists">
                 <a *ngIf="gist.description!=''||gist.description!=null" (click)="openGistDialog(gist.url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">{{gist.description}}</a>
-                <a *ngIf="gist.description==''" (click)="openGistDialog(gist.url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">No title</a>
+                <a *ngIf="gist.description==''||gist.description==null" (click)="openGistDialog(gist.url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">No title</a>
                 <hr>
             </div>
             </mat-tab>
@@ -44,7 +44,7 @@
             <p>{{noSubs}}</p>
             <div *ngFor="let subscription of subscriptions">
                 <a *ngIf="subscription.description!=null||subscription.description!=''" (click)="goToLink(subscription.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">{{subscription.description}}</a>
-                <a *ngIf="subscription.description==null" (click)="goToLink(subscription.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">No title</a>
+                <a *ngIf="subscription.description==null||subscription.description==''" (click)="goToLink(subscription.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">No title</a>
                 <hr>
             </div>
             </mat-tab>
@@ -53,7 +53,7 @@
             <p>{{noStar}}</p>
             <div *ngFor="let starred of starred">
                 <a *ngIf="starred.description!=null||starred.description!=''" (click)="goToLink(starred.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">{{starred.description}}</a>
-                <a *ngIf="starred.description==null" (click)="goToLink(starred.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">No title</a>
+                <a *ngIf="starred.description==null||starred.description==''" (click)="goToLink(starred.html_url)" style="cursor: pointer; text-decoration: underline;color: #6491A6;">No title</a>
                 <hr>
             </div>    
             </mat-tab>
