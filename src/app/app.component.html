@@ -9,9 +9,9 @@
       <td style="padding-bottom: 15px;">
         <div class="carddiv">
           <mat-card class="gist-card">
-            <mat-card-header style="text-align: left;">
+            <mat-card-header style="text-align: left;overflow-wrap: normal;">
               <img (click)="openUserDialog(gist.userUrl)" mat-card-avatar src="{{gist.avatarurl}}" class="example-header-image">
-              <mat-card-title style="overflow-wrap: normal;">{{gist.description}}</mat-card-title>
+              <mat-card-title >{{gist.description}}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
               <div class="filelist">
